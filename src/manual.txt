@@ -1,0 +1,59 @@
+#config docker
+http://ruddra.com/2016/08/14/docker-django-nginx-postgres/
+http://ruddra.com/2016/11/02/serve-static-files-by-nginx-from-django-using-docker/
+
+#tutorial configuracion servidor
+https://www.digitalocean.com/community/tutorials/how-to-set-up-django-with-postgres-nginx-and-gunicorn-on-ubuntu-16-04
+
+#webserver:nginx
+	sudo systemctl restart nginx
+	sudo systemctl start nginx
+#appserver:gunicorn
+	sudo service gunicorn restart
+
+#archivo de configuracion nginx
+/etc/nginx/sites-available
+
+#preparar cambios de modelo en DB
+python3 manage.py makemigrations showcase
+
+#aplicar cambios de modelo en DB
+python3 manage.py migrate
+
+#verificar git
+git status
+
+#activar entorno virtual
+. venv/bin/activate
+
+#copiar archivos estaticos
+python3 manage.py collectstatic
+
+#correr servidor dev
+python3 manage.py runserver 192.168.1.219:80
+
+#admin~dev:m14
+
+#root@estationery:/media/administrator/7A30-D956/eStationeryProject# docker-compose run web python3 
+manage.py createsuperuser
+
+-----------------------------------
+
+GIT
+
+https://github/mharfuch/##.git
+git status
+git pull
+git add -u
+git add *
+git commit -m "<descripción del commit>"
+git push
+
+-----------------------------------
+POSTGRESQL
+
+backup:
+$ docker exec -it db /usr/bin/pg_dump -h db -U postgres postgres > backupDB.sql
+
+restore: 
+$ cat backupDB.sql | docker exec -i db /usr/bin/psql -h db postgres postgres

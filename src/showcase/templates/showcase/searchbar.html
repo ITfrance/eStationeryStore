@@ -1,0 +1,26 @@
+{% block extra_head_searchbar %}
+<link rel="stylesheet" href="/static/showcase/searchbar.css">
+{% endblock %}
+
+{% block searchbar %}
+<div class="wrap">
+  <div class="search">
+    <form action="http://192.168.1.231/showcase">
+      <button class="home">
+        <i class="fa fa-home"></i>
+      </button>
+    </form>
+    <form action="/showcase/search/" method="get">
+      <input type="text" class="searchTerm" placeholder="Ingresar ID, Producto o <Enter> para ver todos..." name='q'>
+        <button type="submit" class="searchButton">
+          <i class="fa fa-search"></i>
+        </button>
+    </form>
+    <form action="http://192.168.1.231/admin/showcase/item/" target="_blank">
+      <button class="config">
+        <i class="fa fa-cog"></i>
+      </button>
+    </form>
+  </div>
+</div>
+{% endblock %}

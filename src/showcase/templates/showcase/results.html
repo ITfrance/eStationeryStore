@@ -1,0 +1,46 @@
+{% include 'showcase/searchbar.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="EN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Showcase</title>
+  <link rel="stylesheet" href="{% static 'showcase/results.css' %}">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link rel="shortcut icon" type="image/ico" href="/media/favicon.ico">
+  {% block extra_head_searchbar %} {% endblock %}  
+</head>
+
+<body>
+
+  <div class="topnav">
+    {% block searchbar %}
+    {% endblock %}
+  </div>
+
+  <div class="main">
+    <ul>
+      {%for item in object_list %}
+      <div class="elements glow">
+        <img class="images" src=/media/{{item.photo}}>
+        <p class="item">{{item.product}}</p>
+        {% if item.stock >= item.minimumStock %}
+        <p title="Ultima modificación: {{item.last_modified}}" class="stock stock-ok">Stock: {{item.stock}}</p>
+        {% else %}
+        <p title="Ultima modificación: {{item.last_modified}}" class="stock stock-min">Stock: {{item.stock}}</p>
+        {% endif %}
+        <form action="http://192.168.1.231/admin/showcase/item/{{item.idProvider}}/change" target="_blank">
+          <button class="pencil">
+            <i class="fa fa-pencil"></i>
+          </button>
+        </form>
+      </div>
+      {% endfor %}
+    </ul>
+  </div>
+    
+</body>
+</html>

@@ -1,0 +1,35 @@
+version: '2'
+
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:    
+      - "80:8000"
+    volumes:
+      - ./src:/src
+      - ./config/nginx:/etc/nginx/conf.d
+      - /persist:/persist
+    depends_on:
+      - web
+  db:
+    container_name: db
+    image: postgres
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - pg_backup:/persist/data
+  web:
+    hostname: estationery
+    container_name: web
+    build: .
+    command: bash -c "python3 manage.py collectstatic --noinput && python3 manage.py makemigrations && python3 manage.py migrate && gunicorn eStationeryStore.wsgi -b 0.0.0.0:80"
+    volumes:
+      - ./src:/src
+      - /persist:/persist
+    expose:
+      - "80"
+    depends_on:
+      - db
+volumes:
+   pg_data:
+   pg_backup:
